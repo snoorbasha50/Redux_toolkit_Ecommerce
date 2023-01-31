@@ -44,7 +44,7 @@ const SinglePage = () => {
       <div style={styles.maindiv}>
         <div style={styles.container}>
           <div style={styles.firstdiv}>
-            <p>{data.title}</p>
+            <p style={{fontSize:"30px",fontWeight:"500"}}>{data.title}</p>
             <p>
               <img
                 style={{ height: "400px", width: "400px" }}
@@ -54,22 +54,22 @@ const SinglePage = () => {
           </div>
 
           <div>
-            <p>${data.price}</p>
-            <p>
+            <p style={{fontSize:"30px",fontWeight:"700"}}>${data.price}</p>
+            <p style={{fontSize:"30px",fontWeight:"700"}}>
               Quantity:{count}
               <br/>
-              <button onClick={increment}>+</button>
-              <button onClick={decrement}>-</button>
+              <button style={{height:"40px",width:"50px",margin:"10px",backgroundColor:"black",color:"whitesmoke",fontSize:"30px"}} onClick={increment}>+</button>
+              <button style={{height:"40px",width:"50px",margin:"10px",backgroundColor:"black",color:"whitesmoke",fontSize:"30px"}} onClick={decrement}>-</button>
             </p>
 
-            <p>Total Price:${(count*Number(data.price)).toFixed(2)}</p>
+            <p style={{fontSize:"30px",fontWeight:"700"}}>Total Price:${(count*Number(data.price)).toFixed(2)}</p>
 
 
             <button
                   style={{
-                    backgroundColor: "black",
+                    backgroundColor: "purple",
                     color: "white",
-                    height: "25px",
+                    height: "35px",
                     width: "100px",
                     margin: "5px",
                   }}
@@ -77,6 +77,7 @@ const SinglePage = () => {
                     if (isPresent(data.id)) {
                       alert("already added to cart");
                     } else {
+                      alert("Item added to Cart")
                       dispatch(addToCart({
                         ...data,
                         count:count

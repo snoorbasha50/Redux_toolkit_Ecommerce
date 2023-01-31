@@ -63,7 +63,7 @@ const Product = () => {
           // ?.filter((k) => k.title.includes(search.toLowerCase()))
           .map((e) => {
             return (
-              <div>
+              <div style={styles.Main}>
                 <div
                   style={styles.container}
                   key={e.id}
@@ -92,12 +92,13 @@ const Product = () => {
                     color: "white",
                     height: "25px",
                     width: "100px",
-                    margin: "5px",
+                    margin: "5px 5px 10px 5px",
                   }}
                   onClick={() => {
                     if (isPresent(e.id)) {
                       alert("already added to cart");
                     } else {
+                      alert("Item added to Cart")
                       dispatch(addToCart(e));
                     }
                   }}
@@ -121,10 +122,12 @@ const styles = {
     gap: "10px",
   },
   container: {
-    boxShadow:
-      "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset",
+
     height: "280px",
     margin: "5px",
     padding: "5px",
+    boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"
   },
+ 
+  
 };
