@@ -1,10 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { addToCart } from "../redux/getSlice";
 
 const SinglePage = () => {
   const location = useLocation();
+  const dispatch=useDispatch()
+  const cartData = useSelector((state) => state.web.cartArr);
   const { data } = location.state;
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
+
+
+
+  const isPresent = (id) => {
+    if (cartData.length !== 0) {
+      let data = cartData.filter((e) => e.id === id);
+      console.log(data, "data");
+      if (data.length !== 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
 
   const increment = () => {
     if (count >= 0) {
@@ -42,6 +63,32 @@ const SinglePage = () => {
             </p>
 
             <p>Total Price:${(count*Number(data.price)).toFixed(2)}</p>
+
+
+            <button
+                  style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    height: "25px",
+                    width: "100px",
+                    margin: "5px",
+                  }}
+                  onClick={() => {
+                    if (isPresent(data.id)) {
+                      alert("already added to cart");
+                    } else {
+                      dispatch(addToCart({
+                        ...data,
+                        count:count
+                      }));
+                    }
+                  }}
+                >
+                  Add to Cart
+                </button>
+
+
+
           
           </div>
         </div>

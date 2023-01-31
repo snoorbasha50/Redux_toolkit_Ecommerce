@@ -16,6 +16,7 @@ const Cart = () => {
               <img style={{ height: "100px", width: "100px" }} src={e.image} />
             </p>
             <p>${e.price}</p>
+            <p>Quantity:{e.count}</p>
             <button onClick={() => dispatch(removeCart(e))}>Remove</button>
           </div>
         );
