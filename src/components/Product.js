@@ -1,11 +1,11 @@
-import { React, useEffect, useState } from "react";
+import { React, useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getProductsService } from "../apiService";
 import { addToCart } from "../redux/getSlice";
 
 const Product = () => {
-  const [searching, setSearching] = useState([]);
+  const [Data, setData] = useState([]);
   const productsData = useSelector((state) => state.web.products);
 
   const cartData = useSelector((state) => state.web.cartArr);
@@ -26,6 +26,19 @@ const Product = () => {
     }
   };
 
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 1000);
+    };
+  };
+
   const handleSearch = (e) => {
     console.log(e.target.value);
     if (e.target.value) {
@@ -35,16 +48,21 @@ const Product = () => {
         e.title.toLowerCase().includes(searchText)
       );
       console.log(searchedProducts, "products of search");
-      setSearching(searchedProducts);
+      setData(searchedProducts);
+    } 
+    else {
+      setData(productsData);
     }
   };
+
+  const optimsedFn = useCallback(debounce(handleSearch));
 
   useEffect(() => {
     dispatch(getProductsService());
   }, []);
 
   useEffect(() => {
-    setSearching(productsData);
+    setData(productsData);
   }, [productsData]);
 
   return (
@@ -55,11 +73,11 @@ const Product = () => {
           type="text"
           placeholder="Search with name"
           // value={search}
-          onChange={handleSearch}
+          onChange={optimsedFn}
         />
       </h1>
       <div style={styles.maindiv}>
-        {searching
+        {Data
           // ?.filter((k) => k.title.includes(search.toLowerCase()))
           .map((e) => {
             return (
@@ -98,7 +116,7 @@ const Product = () => {
                     if (isPresent(e.id)) {
                       alert("already added to cart");
                     } else {
-                      alert("Item added to Cart")
+                      alert("Item added to Cart");
                       dispatch(addToCart(e));
                     }
                   }}
@@ -122,12 +140,9 @@ const styles = {
     gap: "10px",
   },
   container: {
-
     height: "280px",
     margin: "5px",
     padding: "5px",
-    boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   },
- 
-  
 };

@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeCart } from "../redux/getSlice";
+import { removeCart, totalAmount } from "../redux/getSlice";
 
 const Cart = () => {
+  
   const cartData = useSelector((state) => state.web.cartArr);
+  const totalPrice = useSelector((state) => state.web.totalprice);
   const dispatch = useDispatch();
+
+  // const increment = () => {
+  //   if (count >= 0) {
+  //     setCount(count + 1);
+  //   }
+  // };
+
+  // const decrement = () => {
+  //   if (count > 0) {
+  //     setCount(count - 1);
+  //   }
+  // };
+
+  useEffect(() => {
+    dispatch(totalAmount());
+  }, []);
   console.log(cartData);
   return (
     <div>
+      <h1>Total Price of all items :{totalPrice}</h1>
       {cartData?.map((e) => {
         return (
           <div style={styles.container} key={e.id}>
@@ -17,6 +36,12 @@ const Cart = () => {
             </p>
             <p>${e.price}</p>
             <p>Quantity:{e.count}</p>
+
+            {/* <button style={{height:"40px",width:"50px",margin:"10px",backgroundColor:"black",color:"whitesmoke",fontSize:"30px"}} onClick={increment}>+</button>
+            <button style={{height:"40px",width:"50px",margin:"10px",backgroundColor:"black",color:"whitesmoke",fontSize:"30px"}} onClick={decrement}>-</button> */}
+
+
+            <p>Total Price :{(e.count * Number(e.price)).toFixed(2)}</p>
             <button onClick={() => dispatch(removeCart(e))}>Remove</button>
           </div>
         );
