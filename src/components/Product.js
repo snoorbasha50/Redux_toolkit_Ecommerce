@@ -55,7 +55,7 @@ const Product = () => {
     }
   };
 
-  const optimsedFn = useCallback(debounce(handleSearch));
+   const optimsedFunction = debounce(handleSearch);
 
   useEffect(() => {
     dispatch(getProductsService());
@@ -73,7 +73,7 @@ const Product = () => {
           type="text"
           placeholder="Search with name"
           // value={search}
-          onChange={optimsedFn}
+          onChange={optimsedFunction}
         />
       </h1>
       <div style={styles.maindiv}>

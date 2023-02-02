@@ -23,6 +23,14 @@ const getSlice = createSlice({
         cartArr: [...state.cartArr, action.payload],
       };
     },
+    addIncrement: (state, action) => {
+      console.log("statae", action.payload);
+
+      return {
+        ...state,
+        cartArr: action.payload,
+      };
+    },
     removeCart: (state, action) => {
       const productId = action.payload.id;
       state.cartArr = state.cartArr.filter((e) => e.id !== productId);
@@ -37,7 +45,13 @@ const getSlice = createSlice({
   },
 });
 
-export const { getAllProducts, addToCart, removeCart, searching, totalAmount } =
-  getSlice.actions;
+export const {
+  getAllProducts,
+  addToCart,
+  removeCart,
+  searching,
+  totalAmount,
+  addIncrement,
+} = getSlice.actions;
 
 export default getSlice.reducer;

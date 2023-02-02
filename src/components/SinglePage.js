@@ -80,7 +80,7 @@ const SinglePage = () => {
                       alert("Item added to Cart")
                       dispatch(addToCart({
                         ...data,
-                        count:count
+                        count:count,
                       }));
                     }
                   }}
